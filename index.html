@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>HSBTAK - ISI Edition</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="lang-ar">
+
+    <div class="video-bg">
+        <video autoplay muted loop playsinline id="bg-video">
+            <source src="promo.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"></div>
+    </div>
+
+    <div class="container">
+        <header>
+            <div class="lang-toggle">
+                <button onclick="switchLang('ar')" class="btn-lang">AR</button>
+                <button onclick="switchLang('fr')" class="btn-lang">FR</button>
+            </div>
+            <h1 class="glow-text">HSBTAK</h1>
+            <p class="isi-badge" data-ar="صنع خصيصاً لطلاب ISI" data-fr="Exclusif pour ISI">صنع خصيصاً لطلاب ISI</p>
+        </header>
+
+        <main class="glass-card">
+            <div class="tabs">
+                <button class="tab-btn active" onclick="showTool('converter', event)">
+                    <i class="fas fa-sync-alt icon-anim"></i>
+                    <span data-ar="المحول" data-fr="Convertisseur">المحول</span>
+                </button>
+                <button class="tab-btn" onclick="showTool('calculator', event)">
+                    <i class="fas fa-calculator icon-anim"></i>
+                    <span data-ar="الحاسبة" data-fr="Calculatrice">الحاسبة</span>
+                </button>
+            </div>
+
+            <div id="converter" class="tool-content active">
+                <div class="input-row">
+                    <input type="text" id="conv-input" placeholder="0" oninput="calculateConversion()">
+                    <select id="from-base" onchange="calculateConversion()">
+                        <option value="2">Binary (2)</option>
+                        <option value="10" selected>Decimal (10)</option>
+                        <option value="16">Hex (16)</option>
+                    </select>
+                </div>
+                <div class="result-display" id="conv-results">
+                    <span style="opacity:0.5" data-ar="ابدأ الكتابة للتحويل..." data-fr="Tapez pour convertir...">ابدأ الكتابة للتحويل...</span>
+                </div>
+            </div>
+
+            <div id="calculator" class="tool-content">
+                <div class="calc-row">
+                    <input type="text" id="num1" placeholder="N1">
+                    <select id="op">
+                        <option value="+">+</option>
+                        <option value="-">-</option>
+                        <option value="*">×</option>
+                        <option value="/">÷</option>
+                    </select>
+                    <input type="text" id="num2" placeholder="N2">
+                </div>
+                <div class="calc-row">
+                    <select id="calc-base">
+                        <option value="2">Binary</option>
+                        <option value="10" selected>Decimal</option>
+                        <option value="16">Hex</option>
+                    </select>
+                    <button class="btn-action" onclick="runCalc()" data-ar="احسب" data-fr="Calculer">احسب</button>
+                </div>
+                <div class="result-display" id="calc-results"></div>
+            </div>
+        </main>
+
+        <footer>
+            <div class="footer-content">
+                <p>Copyright : MC</p>
+                <a href="https://wa.me/22230726475" class="whatsapp-btn">
+                    <i class="fab fa-whatsapp"></i> <span dir="ltr">+222 30726475</span>
+                </a>
+            </div>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+

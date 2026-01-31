@@ -1,0 +1,157 @@
+:root {
+    --glass: rgba(255, 255, 255, 0.1);
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --accent: #3b82f6;
+    --text-white: #ffffff;
+}
+
+* { box-sizing: border-box; transition: all 0.3s ease; }
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    color: var(--text-white);
+    background: #000;
+    overflow-x: hidden;
+}
+
+/* خلفية الفيديو */
+.video-bg {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: -1;
+}
+
+#bg-video { width: 100%; height: 100%; object-fit: cover; }
+.overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.75); }
+
+/* الحاوية الرئيسية */
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* بطاقة الزجاج */
+.glass-card {
+    background: var(--glass);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid var(--glass-border);
+    border-radius: 30px;
+    padding: 40px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+}
+
+.glow-text {
+    text-shadow: 0 0 20px var(--accent);
+    font-size: 3.2rem;
+    text-align: center;
+    margin: 10px 0;
+    letter-spacing: 2px;
+}
+
+.isi-badge {
+    background: var(--accent);
+    display: block;
+    width: fit-content;
+    margin: 0 auto 30px;
+    padding: 6px 18px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+/* الألسنة (Tabs) */
+.tabs { display: flex; gap: 40px; margin-bottom: 30px; justify-content: center; }
+
+.tab-btn {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    opacity: 0.5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 1rem;
+}
+
+.tab-btn.active { opacity: 1; border-bottom: 3px solid var(--accent); padding-bottom: 10px; }
+
+.icon-anim { font-size: 1.8rem; margin-bottom: 8px; }
+.tab-btn:hover .icon-anim { transform: scale(1.2) rotate(10deg); color: var(--accent); }
+
+/* الصفوف والمدخلات */
+.input-row, .calc-row { display: flex; gap: 15px; margin-bottom: 20px; }
+
+input, select, .btn-action {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid var(--glass-border);
+    color: white;
+    padding: 15px;
+    border-radius: 15px;
+    font-size: 1rem;
+    width: 100%;
+    outline: none;
+}
+
+input:focus { border-color: var(--accent); background: rgba(255,255,255,0.15); }
+
+.btn-action {
+    background: var(--accent);
+    font-weight: 800;
+    cursor: pointer;
+    border: none;
+    text-transform: uppercase;
+}
+
+.btn-action:active { transform: scale(0.95); }
+
+/* شاشة النتائج */
+.result-display {
+    background: rgba(0,0,0,0.5);
+    padding: 25px;
+    border-radius: 20px;
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.3rem;
+    border: 1px dashed var(--glass-border);
+}
+
+/* التذييل */
+footer { margin-top: 40px; text-align: center; }
+.whatsapp-btn {
+    color: #25d366;
+    text-decoration: none;
+    font-size: 1.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 15px;
+}
+
+/* 📱 إعدادات الهاتف الذكي */
+@media (max-width: 600px) {
+    .container { padding: 10px; }
+    .glow-text { font-size: 2.2rem; }
+    .glass-card { padding: 25px 15px; border-radius: 20px; }
+    
+    .input-row, .calc-row {
+        flex-direction: column; /* تحويل العناصر لتصبح عمودية في الهاتف */
+        gap: 12px;
+    }
+
+    .tabs { gap: 20px; }
+    .tab-btn { font-size: 0.85rem; }
+    .icon-anim { font-size: 1.5rem; }
+
+    .result-display { font-size: 1.1rem; padding: 15px; }
+}
+
