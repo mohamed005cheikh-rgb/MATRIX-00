@@ -1,70 +1,72 @@
-// التبديل بين المحول والحاسبة
-function showTool(toolId, event) {
-    document.querySelectorAll('.tool-content').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById(toolId).classList.add('active');
-    event.currentTarget.classList.add('active');
+let currentExIdx = 0;
+const exercises = [];
+
+// توليد تمارين تغطي كافة الرموز المذكورة في القاموس
+function generateExercises() {
+    const database = [
+        { q_ar: "لإدخال بيانات في الخوارزمية نستخدم:", q_fr: "Pour lire une donnée en Algo:", opt: ["Lire", "Ecrire", "<-", "Pour"], ans: "Lire", cat: "ALGO" },
+        { q_ar: "رمز 'لا يساوي' في لغة C هو:", q_fr: "Le symbole 'différent de' en C:", opt: ["<>", "!=", "=/=", "NOT"], ans: "!=", cat: "LANG-C" },
+        { q_ar: "دالة scanf تستخدم للـ:", q_fr: "La fonction scanf est utilisée pour:", opt: ["Affichage", "Lecture", "Saut de ligne", "Calcul"], ans: "Lecture", cat: "LANG-C" },
+        { q_ar: "المحدد %f يستخدم لنوع البيانات:", q_fr: "Le format %f est utilisé pour:", opt: ["int", "char", "float", "double"], ans: "float", cat: "LANG-C" },
+        { q_ar: "نهاية حلقة Pour في الخوارزمية تكون بـ:", q_fr: "La boucle Pour se termine par:", opt: ["FinSi", "FinPour", "Stop", "Next"], ans: "FinPour", cat: "ALGO" },
+        { q_ar: "للحصول على عنوان متغير في الذاكرة نستخدم:", q_fr: "Pour obtenir l'adresse d'une variable:", opt: ["*", "&", "#", "@"], ans: "&", cat: "LANG-C" }
+    ];
+
+    for(let i=0; i<200; i++) {
+        let pattern = database[i % database.length];
+        exercises.push({...pattern, id: `ID:${(i+1).toString().padStart(3, '0')}`});
+    }
 }
 
-// تبديل اللغة (AR/FR)
-function switchLang(lang) {
-    document.body.className = 'lang-' + lang;
-    document.body.dir = (lang === 'ar') ? 'rtl' : 'ltr';
-    document.querySelectorAll('[data-' + lang + ']').forEach(el => {
-        el.textContent = el.getAttribute('data-' + lang);
+function renderEx() {
+    const ex = exercises[currentExIdx];
+    const lang = document.body.className.includes('lang-ar') ? 'ar' : 'fr';
+    
+    document.getElementById('ex-id').textContent = ex.id;
+    document.getElementById('ex-category').textContent = `TYPE: ${ex.cat}`;
+    document.getElementById('ex-question').textContent = lang === 'ar' ? ex.q_ar : ex.q_fr;
+    
+    const container = document.getElementById('ex-options');
+    container.innerHTML = '';
+    
+    [...ex.opt].sort(() => Math.random() - 0.5).forEach(o => {
+        const b = document.createElement('button');
+        b.className = 'option-btn';
+        b.textContent = o;
+        b.onclick = (e) => check(e, o, ex.ans);
+        container.appendChild(b);
     });
 }
 
-// منطق المحول الرقمي
-function calculateConversion() {
-    const val = document.getElementById('conv-input').value.trim();
-    const fromBase = parseInt(document.getElementById('from-base').value);
-    const resDiv = document.getElementById('conv-results');
-
-    if(!val) { 
-        resDiv.innerHTML = `<span style="opacity:0.5">...</span>`; 
-        return; 
+function check(e, sel, cor) {
+    const btns = document.querySelectorAll('.option-btn');
+    btns.forEach(b => b.disabled = true);
+    const feedback = document.getElementById('feedback');
+    
+    if(sel === cor) {
+        e.target.classList.add('correct');
+        feedback.innerHTML = "<span class='text-blue'>[✔] ACCESS_GRANTED</span>";
+    } else {
+        e.target.classList.add('wrong');
+        feedback.innerHTML = `<span class='text-red'>[✘] ERROR: KEY IS ${cor}</span>`;
     }
-
-    try {
-        const decimal = parseInt(val, fromBase);
-        if(isNaN(decimal)) throw "Err";
-        
-        resDiv.innerHTML = `
-            <div style="font-size:0.8rem; opacity:0.6; margin-bottom:5px">BIN: ${decimal.toString(2)}</div>
-            <div style="color:#3b82f6; font-weight:bold; font-size:1.6rem">${decimal}</div>
-            <div style="font-size:0.8rem; opacity:0.6; margin-top:5px">HEX: ${decimal.toString(16).toUpperCase()}</div>
-        `;
-    } catch(e) { 
-        resDiv.innerHTML = `<span style="color:#ff4444">⚠️ صيغة غير صحيحة</span>`; 
-    }
+    document.getElementById('next-btn').style.display = 'block';
 }
 
-// منطق الحاسبة
-function runCalc() {
-    const n1 = document.getElementById('num1').value.trim();
-    const n2 = document.getElementById('num2').value.trim();
-    const op = document.getElementById('op').value;
-    const base = parseInt(document.getElementById('calc-base').value);
-    const resDiv = document.getElementById('calc-results');
-
-    try {
-        const d1 = parseInt(n1, base);
-        const d2 = parseInt(n2, base);
-        if(isNaN(d1) || isNaN(d2)) throw "Err";
-        
-        let res;
-        if(op === '+') res = d1 + d2;
-        else if(op === '-') res = d1 - d2;
-        else if(op === '*') res = d1 * d2;
-        else if(op === '/') res = d1 / d2;
-
-        resDiv.innerHTML = `
-            <div style="font-size:1.4rem; color:#25d366">${res.toString(base).toUpperCase()}</div>
-            <div style="font-size:0.9rem; opacity:0.5">Decimal: ${res}</div>
-        `;
-    } catch(e) { 
-        resDiv.innerHTML = `<span style="color:#ff4444">⚠️ خطأ في الأرقام</span>`; 
-    }
+function nextEx() {
+    currentExIdx++;
+    document.getElementById('next-btn').style.display = 'none';
+    document.getElementById('feedback').innerHTML = '';
+    renderEx();
 }
+
+function switchLang(l) {
+    document.body.className = 'lang-' + l;
+    document.body.dir = l === 'ar' ? 'rtl' : 'ltr';
+    renderEx();
+}
+
+function closePop() { document.getElementById('guide-pop').style.display = 'none'; }
+
+window.onload = () => { generateExercises(); renderEx(); };
 

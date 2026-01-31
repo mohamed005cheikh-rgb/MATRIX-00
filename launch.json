@@ -1,0 +1,15 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Run Matrix Lab",
+            "type": "pwa-chrome",
+            "request": "launch",
+            "file": "${workspaceFolder}/index.html",
+            "runtimeArgs": [
+                "--start-maximized"
+            ]
+        }
+    ]
+}
+

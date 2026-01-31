@@ -2,89 +2,59 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>HSBTAK - ISI Edition</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matrix Lab | MC</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body class="lang-ar">
-
     <div class="video-bg">
-        <video autoplay muted loop playsinline id="bg-video">
-            <source src="promo.mp4" type="video/mp4">
-        </video>
+        <video autoplay muted loop playsinline id="bg-video"><source src="promo.mp4" type="video/mp4"></video>
         <div class="overlay"></div>
     </div>
 
-    <div class="container">
-        <header>
-            <div class="lang-toggle">
-                <button onclick="switchLang('ar')" class="btn-lang">AR</button>
-                <button onclick="switchLang('fr')" class="btn-lang">FR</button>
+    <div id="guide-pop" class="pop-up">
+        <div class="pop-content matrix-border-red">
+            <i class="fas fa-exclamation-triangle pulse-red"></i>
+            <h2>SYSTEM_CHECK</h2>
+            <p data-ar="هل قمت بمراجعة القاموس؟ القاموس يحتوي على جميع الرموز المطلوبة للحل." data-fr="Avez-vous consulté le dictionnaire ? Il contient tous les symboles.">هل قمت بمراجعة القاموس؟</p>
+            <div class="pop-btns">
+                <button class="m-btn btn-red" onclick="location.href='learn.html'">📖 LEARN</button>
+                <button class="m-btn btn-blue" onclick="closePop()">🚀 START</button>
             </div>
-            <h1 class="glow-text">HSBTAK</h1>
-            <p class="isi-badge" data-ar="صنع خصيصاً لطلاب ISI" data-fr="Exclusif pour ISI">صنع خصيصاً لطلاب ISI</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <header class="matrix-header">
+            <div class="lang-box">
+                <button onclick="switchLang('ar')">AR</button>
+                <button onclick="switchLang('fr')">FR</button>
+            </div>
+            <h1 class="glow-text">LAB_ENVIRONMENT</h1>
+            <button class="nav-link-btn blue-border" onclick="location.href='learn.html'">DICT</button>
         </header>
 
         <main class="glass-card">
-            <div class="tabs">
-                <button class="tab-btn active" onclick="showTool('converter', event)">
-                    <i class="fas fa-sync-alt icon-anim"></i>
-                    <span data-ar="المحول" data-fr="Convertisseur">المحول</span>
-                </button>
-                <button class="tab-btn" onclick="showTool('calculator', event)">
-                    <i class="fas fa-calculator icon-anim"></i>
-                    <span data-ar="الحاسبة" data-fr="Calculatrice">الحاسبة</span>
-                </button>
+            <div class="status-bar">
+                <span id="ex-id" class="text-red">ID: 000</span>
+                <span id="ex-category" class="text-blue">TYPE: INIT</span>
             </div>
-
-            <div id="converter" class="tool-content active">
-                <div class="input-row">
-                    <input type="text" id="conv-input" placeholder="0" oninput="calculateConversion()">
-                    <select id="from-base" onchange="calculateConversion()">
-                        <option value="2">Binary (2)</option>
-                        <option value="10" selected>Decimal (10)</option>
-                        <option value="16">Hex (16)</option>
-                    </select>
-                </div>
-                <div class="result-display" id="conv-results">
-                    <span style="opacity:0.5" data-ar="ابدأ الكتابة للتحويل..." data-fr="Tapez pour convertir...">ابدأ الكتابة للتحويل...</span>
-                </div>
-            </div>
-
-            <div id="calculator" class="tool-content">
-                <div class="calc-row">
-                    <input type="text" id="num1" placeholder="N1">
-                    <select id="op">
-                        <option value="+">+</option>
-                        <option value="-">-</option>
-                        <option value="*">×</option>
-                        <option value="/">÷</option>
-                    </select>
-                    <input type="text" id="num2" placeholder="N2">
-                </div>
-                <div class="calc-row">
-                    <select id="calc-base">
-                        <option value="2">Binary</option>
-                        <option value="10" selected>Decimal</option>
-                        <option value="16">Hex</option>
-                    </select>
-                    <button class="btn-action" onclick="runCalc()" data-ar="احسب" data-fr="Calculer">احسب</button>
-                </div>
-                <div class="result-display" id="calc-results"></div>
+            <div class="quiz-box">
+                <h3 id="ex-question">...</h3>
+                <div id="ex-options" class="options-grid"></div>
+                <div id="feedback" class="matrix-msg"></div>
+                <button id="next-btn" class="next-btn-matrix" style="display:none" onclick="nextEx()">CONTINUE_SEQUENCE >></button>
             </div>
         </main>
 
         <footer>
-            <div class="footer-content">
-                <p>Copyright : MC</p>
-                <a href="https://wa.me/22230726475" class="whatsapp-btn">
-                    <i class="fab fa-whatsapp"></i> <span dir="ltr">+222 30726475</span>
-                </a>
+            <div class="footer-grid">
+                <span>&copy; MC 2026</span>
+                <a href="https://wa.me/22230726475" class="wa-link">+222 30726475</a>
             </div>
         </footer>
     </div>
-
     <script src="script.js"></script>
 </body>
 </html>
